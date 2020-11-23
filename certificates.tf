@@ -1,5 +1,5 @@
 module "rye_certificate" {
-  source = "../modules/certificate"
+  source = "github.com/shortrib-net/terraform-module-certificate"
 
   request = file("${local.directories.secrets}/rye.${local.subdomain}.csr")
   email = var.email
@@ -15,7 +15,7 @@ CHAIN
 }
 
 module "bourbon_certificate" {
-  source = "../modules/certificate"
+  source = "github.com/shortrib-net/terraform-module-certificate"
 
   request = file("${local.directories.secrets}/bourbon.${local.subdomain}.csr")
   email = var.email
@@ -31,7 +31,7 @@ CHAIN
 }
 
 module "scotch_certificate" {
-  source = "../modules/certificate"
+  source = "github.com/shortrib-net/terraform-module-certificate"
 
   request = file("${local.directories.secrets}/scotch.${local.subdomain}.csr")
   email = var.email
@@ -47,7 +47,7 @@ CHAIN
 }
 
 module "witness_certificate" {
-  source = "../modules/certificate"
+  source = "github.com/shortrib-net/terraform-module-certificate"
 
   request = file("${local.directories.secrets}/witness.${local.subdomain}.csr")
   email = var.email
