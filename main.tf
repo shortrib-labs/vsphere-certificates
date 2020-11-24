@@ -61,3 +61,26 @@ ${module.potstill_certificate.certificate}
 CHAIN
   filename = "${local.directories.secrets}/potstill.${local.subdomain}.crt"
 }
+
+module "haproxy_certificate" {
+  source = "github.com/shortrib-net/terraform-module-certificate"
+
+  host  = "haproxy.${local.subdomain}"
+  email = var.email
+   
+  gcp_service_account = module.dns_challenge_service_account.private_key
+}
+
+resource "local_file" "haproxy_certificate" {
+  content = <<CHAIN
+${module.haproxy_certificate.certificate}
+CHAIN
+  filename = "${local.directories.secrets}/haproxy.${local.subdomain}.crt"
+}
+
+resource "local_file" "haproxy_private_key" {
+  content = <<CHAIN
+${module.haproxy_certificate.private_key}
+CHAIN
+  filename = "${local.directories.secrets}/haproxy.${local.subdomain}.key"
+}
