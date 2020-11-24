@@ -16,6 +16,10 @@ variable "project_root" {
     type = string
 }
 
+variable "gcp_project" {
+    type = string
+}
+
 locals {
     environment = var.environment 
     dashed_environment = replace(local.environment, ".", "-")
