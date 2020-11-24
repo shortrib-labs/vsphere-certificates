@@ -1,5 +1,5 @@
 module "rye_certificate" {
-  source = "../modules/certificate"
+  source = "github.com/shortrib-net/terraform-module-certificate"
 
   request = file("${local.directories.secrets}/rye.${local.subdomain}.csr")
   email = var.email
@@ -15,7 +15,7 @@ CHAIN
 }
 
 module "bourbon_certificate" {
-  source = "../modules/certificate"
+  source = "github.com/shortrib-net/terraform-module-certificate"
 
   request = file("${local.directories.secrets}/bourbon.${local.subdomain}.csr")
   email = var.email
@@ -31,7 +31,7 @@ CHAIN
 }
 
 module "scotch_certificate" {
-  source = "../modules/certificate"
+  source = "github.com/shortrib-net/terraform-module-certificate"
 
   request = file("${local.directories.secrets}/scotch.${local.subdomain}.csr")
   email = var.email
@@ -46,18 +46,18 @@ CHAIN
   filename = "${local.directories.secrets}/scotch.${local.subdomain}.crt"
 }
 
-module "witness_certificate" {
-  source = "../modules/certificate"
+module "potstill_certificate" {
+  source = "github.com/shortrib-net/terraform-module-certificate"
 
-  request = file("${local.directories.secrets}/witness.${local.subdomain}.csr")
+  request = file("${local.directories.secrets}/potstill.${local.subdomain}.csr")
   email = var.email
    
   gcp_service_account = module.dns_challenge_service_account.private_key
 }
 
-resource "local_file" "witness_certificate" {
+resource "local_file" "potstill_certificate" {
   content = <<CHAIN
-${module.witness_certificate.certificate}
+${module.potstill_certificate.certificate}
 CHAIN
-  filename = "${local.directories.secrets}/witness.${local.subdomain}.crt"
+  filename = "${local.directories.secrets}/potstill.${local.subdomain}.crt"
 }
