@@ -62,6 +62,22 @@ CHAIN
   filename = "${local.directories.secrets}/potstill.${local.subdomain}.crt"
 }
 
+module "malt_certificate" {
+  source = "github.com/shortrib-net/terraform-module-certificate"
+
+  request = file("${local.directories.secrets}/malt.${local.subdomain}.csr")
+  email = var.email
+   
+  gcp_service_account = module.dns_challenge_service_account.private_key
+}
+
+resource "local_file" "malt_certificate" {
+  content = <<CHAIN
+${module.malt_certificate.certificate}
+CHAIN
+  filename = "${local.directories.secrets}/malt.${local.subdomain}.crt"
+}
+
 module "haproxy_certificate" {
   source = "github.com/shortrib-net/terraform-module-certificate"
 
